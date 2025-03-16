@@ -1,1 +1,103 @@
 npm install -g netlify-cli
+mkdir ingenious-website && cd ingenious-website
+/ingenious-website
+  ├── index.html
+  ├── style.css
+  ├── script.js
+  ├── assets/ (images, videos, etc.)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingenious - Coming Soon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background">
+        <video autoplay loop muted>
+            <source src="assets/background.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="content">
+        <h1>Ingenious - Launching Soon</h1>
+        <p id="countdown"></p>
+        <form id="signup-form">
+            <input type="email" placeholder="Enter your email" required>
+            <input type="text" placeholder="Enter your phone (optional)">
+            <button type="submit">Notify Me</button>
+        </form>
+        <div id="discount-popup">
+            <p>Use code **ING10** for 10% off when we launch!</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+body {
+    text-align: center;
+    color: white;
+    background: black;
+}
+
+.background video {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#countdown {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+form input {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+#discount-popup {
+    background: #ffcc00;
+    color: black;
+    padding: 10px;
+    position: absolute;
+    top: 10px; right: 10px;
+    display: none;
+}
+// Countdown Timer
+const launchDate = new Date("2025-06-01T00:00:00").getTime();
+const countdown = document.getElementById("countdown");
+
+setInterval(() => {
+    let now = new Date().getTime();
+    let timeLeft = launchDate - now;
+    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+// Show Discount Popup
+setTimeout(() => {
+    document.getElementById("discount-popup").style.display = "block";
+}, 3000);
+
+// Handle Form Submission
+document.getElementById("signup-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    alert("You have been subscribed!");
+});
