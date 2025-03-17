@@ -1,1 +1,146 @@
-npm install -g netlify-cli
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingenious - Express Yourself</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 50px;
+        }
+        .popup {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 0px 10px white;
+        }
+        .popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+        }
+        .countdown {
+            font-size: 48px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .signup-form {
+            margin-top: 20px;
+        }
+        .signup-form input {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+        }
+        .signup-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        @media screen and (max-width: 600px) {
+            .popup {
+                width: 90%;
+            }
+            .signup-form input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted class="video-background">
+        <source src="your-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="content">
+        <h1>Ingenious</h1>
+        <p>Be original. Be clever. Express yourself.</p>
+        <div class="countdown"> <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+            <span id="countdown" style="font-size: 32px; font-weight: bold;">00:00:00</span>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 16px;">
+            <span>Hours</span><span>Minutes</span><span>Seconds</span>
+        </div></div>
+    </div>
+    
+    <div id="popup" class="popup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Exclusive Discount!</h2>
+        <p>Get 10% off your first order!</p>
+        <div class="signup-form">
+            <h3>Sign up for early access</h3>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            <button onclick="signup()">Sign Up</button>
+        </div>
+    </div>
+    
+    <script>
+        function startCountdown() {
+            const dropDate = new Date("2025-04-24T14:40:00").getTime();
+            setInterval(function() {
+                const now = new Date().getTime();
+                const timeLeft = dropDate - now;
+                const hours = String(Math.floor((timeLeft / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const minutes = String(Math.floor((timeLeft / (1000 * 60)) % 60)).padStart(2, '0');
+                const seconds = String(Math.floor((timeLeft / 1000) % 60)).padStart(2, '0');
+                document.getElementById("countdown").textContent = `${hours}:${minutes}:${seconds}`;
+            }, 1000);
+        }
+        
+        startCountdown();
+        
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function signup() {
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
+            if(email && phone) {
+                alert("Thank you for signing up! You'll receive early access updates.");
+                closePopup();
+            } else {
+                alert("Please enter both email and phone number.");
+            }
+        }
+    </script>
+</body>
+</html>
+
